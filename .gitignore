@@ -1,0 +1,6 @@
+.git
+/node_modules
+/public/assets
+/public/build
+
+draft.js
