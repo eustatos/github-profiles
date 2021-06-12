@@ -21,6 +21,7 @@ module.exports = {
     devServer: {
         contentBase: path.join(__dirname, 'public'),
         compress: true,
+        historyApiFallback: true,
         hot: true,
         inline: true,
         port: 8088,

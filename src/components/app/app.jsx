@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
 
 import Login from '../../pages/Login';
 import Logout from '../../pages/Logout';
@@ -8,7 +9,15 @@ import { someAction } from '../../actions/app';
 function App() {
     return (
         <div className="app">
-            <Logout />
+            <Switch>
+                <Route exact path="/"><Login /></Route>
+            </Switch>
+            <Switch>
+                <Route exact path="/login"><Login /></Route>
+            </Switch>
+            <Switch>
+                <Route exact path="/logout"><Logout /></Route>
+            </Switch>
         </div>
     );
 }
