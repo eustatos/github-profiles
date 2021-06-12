@@ -1,4 +1,4 @@
-'use stricts'
+'use stricts';
 
 const path = require('path');
 
@@ -29,17 +29,20 @@ module.exports = {
     devtool: 'source-map',
     module: {
         rules: [{
-            test: /\.js$/,
+            test: /\.jsx?$/,
             exclude: /node_modules/,
+            resolve: {
+                extensions: ['.js', '.jsx']
+            },
             use: {
-              loader: 'babel-loader'
+                loader: 'babel-loader'
             }
         }, {
             test: /\.scss$/,
             use: [
-              'style-loader',
-              'css-loader',
-              'sass-loader'
+                'style-loader',
+                'css-loader',
+                'sass-loader'
             ]
         }]
     }
