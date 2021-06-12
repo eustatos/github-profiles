@@ -1,29 +1,25 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
+import Login from '../../pages/Login';
+import Logout from '../../pages/Logout';
 import { someAction } from '../../actions/app';
-import { appConstant } from '../../constants/app';
 
-function App({ someAction, someProp }) {
-    useEffect(() => {
-        setTimeout(() => someAction('someValue'), appConstant);
-    }, []);
-
+function App() {
     return (
         <div className="app">
-            React + Redux = 
-            { `${ someProp ? ' ' + someProp : ' ?' }` }
+            <Logout />
         </div>
     );
 }
 
 const mapDispatchToProps = {
     someAction
-}
+};
 
 const mapStateToProps = state => ({
     someProp: state.someReducer.someProp
-})
+});
 
 const appContainer = connect(mapStateToProps, mapDispatchToProps)(App);
 
