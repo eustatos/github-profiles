@@ -4,19 +4,19 @@ import { Switch, Route } from 'react-router-dom';
 
 import Login from '../../pages/Login';
 import Logout from '../../pages/Logout';
+import UserProfile from '../../pages/User-profile';
 import { someAction } from '../../actions/app';
 
-function App() {
+function App({ isAuthenticated }) {
+    if (!isAuthenticated) {
+        return <Login />;
+    }
     return (
         <div className="app">
             <Switch>
-                <Route exact path="/"><Login /></Route>
-            </Switch>
-            <Switch>
-                <Route exact path="/login"><Login /></Route>
-            </Switch>
-            <Switch>
-                <Route exact path="/logout"><Logout /></Route>
+                <Route exact path="/" component={UserProfile} />
+                <Route exact path="/profile" component={UserProfile} />
+                <Route exact path="/logout" component={Logout} />
             </Switch>
         </div>
     );
@@ -27,7 +27,7 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = state => ({
-    someProp: state.someReducer.someProp
+    isAuthenticated: state.loginReducer.isAuthenticated
 });
 
 const appContainer = connect(mapStateToProps, mapDispatchToProps)(App);

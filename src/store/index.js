@@ -1,13 +1,37 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createBrowserHistory } from 'history';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
+import { routerMiddleware } from 'connected-react-router';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { composeWithDevTools } from 'redux-devtools-extension';
 
-import reducers from '../reducers';
+import rootReducer from '../reducers';
 
-const store = createStore(
-    reducers,
-    composeWithDevTools(applyMiddleware(thunk))
-);
+export const history = createBrowserHistory();
+const logger = createLogger();
 
-export default store;
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const createStoreWithMiddleware = composeEnhancers(applyMiddleware(
+    thunk,
+    routerMiddleware(history),
+    logger
+))(createStore);
+
+export default function configureStore(initialState) {
+    return createStoreWithMiddleware(rootReducer(history), initialState);
+}
+
+// const store = createStore(
+//     rootReducer(history),
+//     {},
+//     composeEnhancers(
+//         applyMiddleware(
+//             thunk,
+//             routerMiddleware(history),
+//             logger
+//         )
+//     )
+// );
+
+// export default store;

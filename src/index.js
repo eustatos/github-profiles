@@ -1,17 +1,18 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router'
+import App from './containers/app';
+import configureStore, { history } from './store';
 
-import App from './components/app';
-import store from './store';
+const store = configureStore();
 
 ReactDOM.render(
-    <BrowserRouter>
-        <Provider store={store}>
+    <Provider store={store}>
+        <ConnectedRouter history={history}>
             <App />
-        </Provider>
-    </BrowserRouter>,
+        </ConnectedRouter>
+    </Provider>,
     document.getElementById('root')
 );

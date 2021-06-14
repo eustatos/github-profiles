@@ -1,27 +1,40 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Lock from '@material-ui/icons/Lock';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import { withStyles } from '@material-ui/core/styles';
 
-import { HELPER_TEXT, PASSWORD, USERNAME } from '../../constants/login';
+import { clearError, verifyAuth } from '../../actions/login';
 
 const styles = theme => ({
     margin: {
-        margin: theme.spacing(2)
+        margin: theme.spacing(1)
+    },
+    container: {
+        display: 'flex',
+        height: '100vh'
+    },
+    form: {
+        margin: 'auto',
+        maxWidth: '400px',
+        minHeight: '200px'
+    },
+    buttonContainer: {
+        display: 'flex',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        alignSelf: 'flex-end'
     }
 });
 
 const initState = {
-    error: false,
-    helperText: '',
     password: '',
-    redirect: false,
     username: ''
 };
 
@@ -32,99 +45,107 @@ class Login extends React.PureComponent {
     }
 
     handleOnClickButton = () => {
-        const { password, username } = this.state;
-
-        if (username === USERNAME && password === PASSWORD) {
-            this.setState({ redirect: true });
-            return;
-        }
-        this.setState({
-            ...initState,
-            error: true,
-            helperText: HELPER_TEXT
-        });
+        const { verifyAuth } = this.props;
+        verifyAuth(this.state);
     }
 
     handleOnChangeField = (e, field) => {
-        console.log(field, 'e.target.value', e.target.value);
-
+        const { clearError, error } = this.props;
         this.setState({
-            error: false,
-            helperText: '',
             [field]: e.target.value
         });
+        if (error) {
+            clearError();
+        }
     }
 
     render() {
-        const { classes } = this.props;
-        const {
-            error,
-            helperText,
-            password,
-            username,
-            redirect
-        } = this.state;
-
-        if (redirect) {
-            return <Redirect to={{ pathname: '/logout' }} />;
-        }
+        const { classes, error, isSent } = this.props;
+        const { password, username } = this.state;
 
         return (
-            <Paper
-                style={{ margin: 'auto' }}
-                variant="outlined"
-            >
-                <div className={classes.margin}>
-                    <Grid container spacing={1} alignItems="flex-end">
-                        <Grid item>
+            <Container className={classes.container}>
+                <Grid
+                    className={classes.form}
+                    container
+                    direction="column"
+                    justify="space-between"
+                    alignItems="stretch"
+                >
+                    <Grid
+                        container
+                        direction="column"
+                        alignItems="stretch"
+                    >
+                        <Grid item className={classes.margin}>
                             <TextField
-                                error={error}
+                                error={!!error}
+                                fullWidth
                                 id="username"
                                 label="Username"
                                 type="email"
                                 autoFocus
                                 onChange={e => this.handleOnChangeField(e, 'username')}
                                 required
-                                style={{ width: '100%' }}
                                 value={username}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <AccountCircle />
+                                        </InputAdornment>
+                                    )
+                                }}
                             />
                         </Grid>
-                        <Grid item>
-                            <AccountCircle />
-                        </Grid>
+                        <Grid item className={classes.margin}>
+                        <TextField
+                            error={!!error}
+                            fullWidth
+                            helperText={error}
+                            id="password"
+                            label="Password"
+                            type="password"
+                            onChange={e => this.handleOnChangeField(e, 'password')}
+                            required
+                            value={password}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <Lock />
+                                    </InputAdornment>
+                                )
+                            }}
+                        />
                     </Grid>
-                    <Grid container spacing={1} alignItems="flex-end">
-                        <Grid item>
-                            <TextField
-                                error={error}
-                                helperText={helperText}
-                                id="password"
-                                label="Password"
-                                type="password"
-                                onChange={e => this.handleOnChangeField(e, 'password')}
-                                required
-                                style={{ width: '100%' }}
-                                value={password}
-                            />
-                        </Grid>
-                        <Grid item>
-                            <Lock />
-                        </Grid>
                     </Grid>
-                    <Grid container justify="center" style={{ marginTop: '20px' }}>
+                    <Grid item className={classes.buttonContainer}>
                         <Button
                             variant="outlined"
                             color="primary"
-                            style={{ textTransform: 'none' }}
+                            style={{ margin: 'auto', textTransform: 'none' }}
                             onClick={this.handleOnClickButton}
+                            disabled={isSent}
                         >
                             Login
                         </Button>
                     </Grid>
-                </div>
-            </Paper>
+                </Grid>
+            </Container>
         );
     }
 }
 
-export default withStyles(styles)(Login);
+const mapStateToProps = state => ({
+    error: state.loginReducer.error,
+    isSent: state.loginReducer.isSent
+});
+
+const mapDispatchToProps = {
+    clearError,
+    verifyAuth
+};
+
+const styledLogin = withStyles(styles)(Login);
+const loginContainer = connect(mapStateToProps, mapDispatchToProps)(styledLogin);
+
+export default loginContainer;

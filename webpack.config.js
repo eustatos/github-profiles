@@ -25,7 +25,11 @@ module.exports = {
         hot: true,
         inline: true,
         port: 8088,
-        progress: true
+        progress: true,
+        proxy: {
+            context: ['/auth', '/api'],
+            target: 'http://localhost:8090'
+        }
     },
     devtool: 'source-map',
     module: {
