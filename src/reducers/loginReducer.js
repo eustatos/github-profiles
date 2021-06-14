@@ -11,6 +11,10 @@ const initialState = {
     username: null
 };
 
+const setSession = () => sessionStorage.setItem('session', 'active');
+
+const getSession = () => sessionStorage.getItem('session');
+
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         case actions.VERIFY_AUTH:
@@ -27,6 +31,7 @@ export default function reducer(state = initialState, action) {
             if (!isAuthenticated) {
                 error = INCORRECTED_USERNAME_OR_PASSWORD;
             }
+            setSession();
 
             return {
                 ...state,
@@ -42,11 +47,18 @@ export default function reducer(state = initialState, action) {
                 error: SOMETHING_WENT_WRONG
             };
 
-        case actions.CLEAR_ERROR:
+        case actions.CLEAR_AUTH_ERROR:
             return {
                 ...state,
                 error: null
             };
+
+        case actions.GET_SESSION: {
+            return {
+                ...state,
+                isAuthenticated: getSession()
+            };
+        }
 
         default:
             return state;

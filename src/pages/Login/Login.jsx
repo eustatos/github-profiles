@@ -10,7 +10,7 @@ import Lock from '@material-ui/icons/Lock';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { withStyles } from '@material-ui/core/styles';
 
-import { clearError, verifyAuth } from '../../actions/login';
+import { clearAuthError, getSession, verifyAuth } from '../../actions/login';
 
 const styles = theme => ({
     margin: {
@@ -50,13 +50,18 @@ class Login extends React.PureComponent {
     }
 
     handleOnChangeField = (e, field) => {
-        const { clearError, error } = this.props;
+        const { clearAuthError, error } = this.props;
         this.setState({
             [field]: e.target.value
         });
         if (error) {
-            clearError();
+            clearAuthError();
         }
+    }
+
+    componentDidMount = () => {
+        const { getSession } = this.props;
+        getSession();
     }
 
     render() {
@@ -98,25 +103,25 @@ class Login extends React.PureComponent {
                             />
                         </Grid>
                         <Grid item className={classes.margin}>
-                        <TextField
-                            error={!!error}
-                            fullWidth
-                            helperText={error}
-                            id="password"
-                            label="Password"
-                            type="password"
-                            onChange={e => this.handleOnChangeField(e, 'password')}
-                            required
-                            value={password}
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <Lock />
-                                    </InputAdornment>
-                                )
-                            }}
-                        />
-                    </Grid>
+                            <TextField
+                                error={!!error}
+                                fullWidth
+                                helperText={error}
+                                id="password"
+                                label="Password"
+                                type="password"
+                                onChange={e => this.handleOnChangeField(e, 'password')}
+                                required
+                                value={password}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <Lock />
+                                        </InputAdornment>
+                                    )
+                                }}
+                            />
+                        </Grid>
                     </Grid>
                     <Grid item className={classes.buttonContainer}>
                         <Button
@@ -141,7 +146,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    clearError,
+    clearAuthError,
+    getSession,
     verifyAuth
 };
 

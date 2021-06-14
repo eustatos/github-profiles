@@ -13,7 +13,7 @@
     "@material-ui/icons": "^4.11.2",
     "axios": "^0.21.1",
     "connected-react-router": "^6.9.1",
-    "history": "^5.0.0",
+    "history": "^4.10.1",
     "koa": "^2.13.1",
     "koa-bodyparser": "^4.3.0",
     "koa-logger": "^3.2.1",

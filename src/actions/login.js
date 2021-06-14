@@ -1,14 +1,20 @@
 import axios from 'axios';
 import * as actions from '../constants/actionTypes';
+import services from '../config';
 
 export const verifyAuth = payload => dispatch => {
+    const { method, url } = services.api.auth;
+
     dispatch(({
         type: actions.VERIFY_AUTH,
         username: payload.username
     }));
 
-    axios
-        .post('/auth', { ...payload })
+    axios({
+        method,
+        url,
+        data: { ...payload }
+    })
         .then(res => {
             dispatch({
                 type: actions.VERIFY_AUTH_SUCCESS,
@@ -23,6 +29,10 @@ export const verifyAuth = payload => dispatch => {
         });
 };
 
-export const clearError = () => ({
-    type: actions.CLEAR_ERROR
+export const clearAuthError = () => ({
+    type: actions.CLEAR_AUTH_ERROR
+});
+
+export const getSession = () => ({
+    type: actions.GET_SESSION
 });
