@@ -9,7 +9,7 @@ router
     })
     .post('/auth', ctx => {
         const { username, password } = ctx.request.body;
-        ctx.body = { isAuthenticated: isAuthenticated(username, password)};
+        ctx.body = { isAuthenticated: isAuthenticated(username, password) };
     });
 
 const routes = router.routes();

@@ -104,7 +104,7 @@ class Profile extends React.PureComponent {
                             />
                         </Grid>
                         <Grid item className={classes.item}>
-                            <RepoTable repos={repos} error={reposError}/>
+                            <RepoTable repos={repos} error={reposError} />
                         </Grid>
                     </Grid>
                 ) }
