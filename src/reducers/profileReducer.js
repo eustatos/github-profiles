@@ -1,10 +1,12 @@
 import * as actions from '../constants/actionTypes';
-import { USER_NOT_FOUND } from '../constants/error';
+import { SOMETHING_WENT_WRONG, USER_NOT_FOUND } from '../constants/error';
 
 const initialState = {
     error: null,
     isLoading: false,
-    name: null
+    profile: null,
+    repos: [],
+    username: null
 };
 
 export default function reducer(state = initialState, action) {
@@ -13,14 +15,14 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 isLoading: true,
-                name: action.name
+                username: action.username
             };
 
         case actions.GET_PROFILE_SUCCESS: {
             return {
                 ...state,
                 isLoading: false,
-                data: action.data
+                profile: action.profile
             };
         }
 
@@ -30,10 +32,30 @@ export default function reducer(state = initialState, action) {
                 error: USER_NOT_FOUND
             };
 
-        case actions.CLEAR_AUTH_ERROR:
+        case actions.CLEAR_PROFILE_ERROR:
             return {
                 ...state,
                 error: null
+            };
+
+        case actions.GET_REPOS:
+            return {
+                ...state,
+                isLoading: true
+            };
+
+        case actions.GET_REPOS_SUCCESS: {
+            return {
+                ...state,
+                isLoading: false,
+                repos: action.repos
+            };
+        }
+
+        case actions.GET_REPOS_FAILURE:
+            return {
+                ...initialState,
+                error: SOMETHING_WENT_WRONG
             };
 
         default:

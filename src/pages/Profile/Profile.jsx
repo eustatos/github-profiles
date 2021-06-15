@@ -5,25 +5,22 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
-import { withStyles } from '@material-ui/core/styles';
+import { ThemeProvider, withStyles } from '@material-ui/core/styles';
 
+import ProfileTable from '../../components/profile-table';
+import Avatar from '../../components/avatar';
 import { clearProfileError, getProfile } from '../../actions/profile';
 
 const styles = theme => ({
-    margin: {
-        margin: theme.spacing(1)
+    button: {
+        marginTop: 10
     },
-    form: {
-        maxWidth: '400px',
-        minHeight: '120px',
-        margin: 'auto',
-        marginTop: '100px'
+    container: {
+        minHeight: 120,
+        marginTop: 50
     },
-    buttonContainer: {
-        display: 'flex',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        alignSelf: 'flex-end'
+    item: {
+        padding: theme.spacing(2)
     }
 });
 
@@ -39,7 +36,8 @@ class Profile extends React.PureComponent {
 
     handleOnClickButton = () => {
         const { getProfile } = this.props;
-        getProfile(this.state);
+        const { username } = this.state;
+        getProfile(username);
     }
 
     handleOnChangeField = e => {
@@ -53,19 +51,23 @@ class Profile extends React.PureComponent {
     }
 
     render() {
-        const { classes, error, isLoading } = this.props;
+        const {
+            classes,
+            error,
+            isLoading,
+            profile,
+            repos
+        } = this.props;
         const { username } = this.state;
 
         return (
-            <Container>
+            <Container spacing={2}>
                 <Grid
-                    className={classes.form}
+                    className={classes.container}
                     container
-                    direction="column"
-                    justify="space-between"
-                    alignItems="stretch"
+                    justify="center"
                 >
-                    <Grid item className={classes.margin}>
+                    <Grid item xs={12} md={3} sm={6} className={classes.item}>
                         <TextField
                             error={!!error}
                             helperText={error}
@@ -79,8 +81,9 @@ class Profile extends React.PureComponent {
                             value={username}
                         />
                     </Grid>
-                    <Grid item className={classes.buttonContainer}>
+                    <Grid item xs={12} md={3} sm={3} className={classes.item}>
                         <Button
+                            className={classes.button}
                             variant="outlined"
                             color="primary"
                             onClick={this.handleOnClickButton}
@@ -90,6 +93,20 @@ class Profile extends React.PureComponent {
                         </Button>
                     </Grid>
                 </Grid>
+                { profile && (
+                    <Grid container justify="center">
+                        <Grid item className={classes.item}>
+                            <Avatar
+                                name={profile.name}
+                                login={profile.login}
+                                src={profile.avatar_url}
+                            />
+                        </Grid>
+                        <Grid item className={classes.item}>
+                            <ProfileTable repos={repos} />
+                        </Grid>
+                    </Grid>
+                ) }
             </Container>
         );
     }
@@ -97,7 +114,9 @@ class Profile extends React.PureComponent {
 
 const mapStateToProps = state => ({
     error: state.profileReducer.error,
-    isLoading: state.profileReducer.isLoading
+    isLoading: state.profileReducer.isLoading,
+    profile: state.profileReducer.profile,
+    repos: state.profileReducer.repos
 });
 
 const mapDispatchToProps = {
