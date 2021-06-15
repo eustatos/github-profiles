@@ -5,9 +5,9 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
-import { ThemeProvider, withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 
-import ProfileTable from '../../components/profile-table';
+import RepoTable from '../../components/repo-table';
 import Avatar from '../../components/avatar';
 import { clearProfileError, getProfile } from '../../actions/profile';
 
@@ -82,7 +82,7 @@ class Profile extends React.PureComponent {
                             value={username}
                         />
                     </Grid>
-                    <Grid item xs={12} md={3} sm={3} className={classes.item}>
+                    <Grid item xs={12} md={2} sm={3} className={classes.item}>
                         <Button
                             className={classes.button}
                             variant="outlined"
@@ -104,7 +104,7 @@ class Profile extends React.PureComponent {
                             />
                         </Grid>
                         <Grid item className={classes.item}>
-                            <ProfileTable repos={repos} error={reposError}/>
+                            <RepoTable repos={repos} error={reposError}/>
                         </Grid>
                     </Grid>
                 ) }

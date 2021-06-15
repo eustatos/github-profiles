@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,30 +8,21 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
     table: {
-        minWidth: 650
+        minWidth: 450
     }
 });
 
 const columns = [
-    'Name',
-    'Language',
-    'Description',
-    'Stars'
+    'Author',
+    'Hash',
+    'Date'
 ];
 
-export default function ProfileTable({ error, repos }) {
+export default function CommitTable({ commits }) {
     const classes = useStyles();
-
-    if (error) {
-        return <Typography variant="h5" component="h2">{ error }</Typography>;
-    }
-    if (repos.length === 0) {
-        return <Typography variant="h5" component="h2">No repos</Typography>;
-    }
 
     return (
         <TableContainer component={Paper}>
@@ -43,14 +35,17 @@ export default function ProfileTable({ error, repos }) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    { repos
-                        .filter(repo => !repo.private)
-                        .map(repo => (
-                            <TableRow key={repo.name}>
-                                <TableCell component="th">{repo.name}</TableCell>
-                                <TableCell>{repo.language}</TableCell>
-                                <TableCell>{repo.description}</TableCell>
-                                <TableCell>{repo.stargazers_count}</TableCell>
+                    { commits
+                        .map(commit => (
+                            <TableRow
+                                key={commit.sha}
+                                hover
+                            >
+                                <TableCell component="th">
+                                    {commit.commit.author.name}
+                                </TableCell>
+                                <TableCell>{commit.sha}</TableCell>
+                                <TableCell>{commit.commit.author.date}</TableCell>
                             </TableRow>
                         )) }
                 </TableBody>

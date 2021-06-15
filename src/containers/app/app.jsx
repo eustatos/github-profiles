@@ -5,6 +5,7 @@ import { Switch, Redirect, Route } from 'react-router-dom';
 import Login from '../../pages/Login';
 import Logout from '../../pages/Logout';
 import Profile from '../../pages/Profile';
+import Repo from '../../pages/Repo';
 import { someAction } from '../../actions/app';
 
 function App({ isAuthenticated }) {
@@ -16,6 +17,7 @@ function App({ isAuthenticated }) {
         <div className="app">
             <Switch>
                 <Route exact path="/profile" component={Profile} />
+                <Route exact path="/repo/:id" component={Repo} />
                 <Route exact path="/logout" component={Logout} />
                 <Redirect from="/" to="/profile" />
             </Switch>
