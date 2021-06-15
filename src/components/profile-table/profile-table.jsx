@@ -7,6 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
     table: {
@@ -14,27 +15,22 @@ const useStyles = makeStyles({
     }
 });
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-}
-
 const columns = [
     'Name',
     'Language',
     'Description',
     'Stars'
-]
-
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-export default function ProfileTable({ repos }) {
+export default function ProfileTable({ error, repos }) {
     const classes = useStyles();
+
+    if (error) {
+        return <Typography variant="h5" component="h2">{ error }</Typography>;
+    }
+    if (repos.length === 0) {
+        return <Typography variant="h5" component="h2">No repos</Typography>;
+    }
 
     return (
         <TableContainer component={Paper}>
@@ -56,8 +52,7 @@ export default function ProfileTable({ repos }) {
                                 <TableCell>{repo.description}</TableCell>
                                 <TableCell>{repo.stargazers_count}</TableCell>
                             </TableRow>
-                        ))
-                    }
+                        )) }
                 </TableBody>
             </Table>
         </TableContainer>

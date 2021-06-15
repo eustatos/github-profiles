@@ -53,9 +53,10 @@ class Profile extends React.PureComponent {
     render() {
         const {
             classes,
-            error,
             isLoading,
             profile,
+            profileError,
+            reposError,
             repos
         } = this.props;
         const { username } = this.state;
@@ -69,8 +70,8 @@ class Profile extends React.PureComponent {
                 >
                     <Grid item xs={12} md={3} sm={6} className={classes.item}>
                         <TextField
-                            error={!!error}
-                            helperText={error}
+                            error={!!profileError}
+                            helperText={profileError}
                             fullWidth
                             id="username"
                             label="username"
@@ -103,7 +104,7 @@ class Profile extends React.PureComponent {
                             />
                         </Grid>
                         <Grid item className={classes.item}>
-                            <ProfileTable repos={repos} />
+                            <ProfileTable repos={repos} error={reposError}/>
                         </Grid>
                     </Grid>
                 ) }
@@ -113,7 +114,8 @@ class Profile extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-    error: state.profileReducer.error,
+    profileError: state.profileReducer.profileError,
+    reposError: state.profileReducer.reposError,
     isLoading: state.profileReducer.isLoading,
     profile: state.profileReducer.profile,
     repos: state.profileReducer.repos
