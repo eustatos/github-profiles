@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -65,8 +66,17 @@ class Login extends React.PureComponent {
     }
 
     render() {
-        const { classes, error, isSent } = this.props;
+        const {
+            classes,
+            error,
+            isAuthenticated,
+            isSent
+        } = this.props;
         const { password, username } = this.state;
+
+        if (isAuthenticated) {
+            return <Redirect to="/" />;
+        }
 
         return (
             <Container className={classes.container}>
@@ -142,7 +152,8 @@ class Login extends React.PureComponent {
 
 const mapStateToProps = state => ({
     error: state.loginReducer.error,
-    isSent: state.loginReducer.isSent
+    isSent: state.loginReducer.isSent,
+    isAuthenticated: state.loginReducer.isAuthenticated
 });
 
 const mapDispatchToProps = {
