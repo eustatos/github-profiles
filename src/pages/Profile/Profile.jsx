@@ -41,11 +41,11 @@ class Profile extends React.PureComponent {
     }
 
     handleOnChangeField = e => {
-        const { clearProfileError, error } = this.props;
+        const { clearProfileError, profileError } = this.props;
         this.setState({
             username: e.target.value
         });
-        if (error) {
+        if (profileError) {
             clearProfileError();
         }
     }
@@ -63,37 +63,41 @@ class Profile extends React.PureComponent {
 
         return (
             <Container spacing={2}>
-                <Grid
-                    className={classes.container}
-                    container
-                    justify="center"
-                >
-                    <Grid item xs={12} md={3} sm={6} className={classes.item}>
-                        <TextField
-                            error={!!profileError}
-                            helperText={profileError}
-                            fullWidth
-                            id="username"
-                            label="username"
-                            type="text"
-                            autoFocus
-                            onChange={e => this.handleOnChangeField(e, 'username')}
-                            required
-                            value={username}
-                        />
+                <form>
+                    <Grid
+                        className={classes.container}
+                        container
+                        justify="center"
+                    >
+                        <Grid item xs={12} md={3} sm={6} className={classes.item}>
+                            <TextField
+                                error={!!profileError}
+                                helperText={profileError}
+                                fullWidth
+                                id="username"
+                                label="username"
+                                type="text"
+                                autoFocus
+                                onChange={e => this.handleOnChangeField(e, 'username')}
+                                required
+                                value={username}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={2} sm={3} className={classes.item}>
+                            <Button
+                                className={classes.button}
+                                variant="outlined"
+                                color="primary"
+                                onClick={this.handleOnClickButton}
+                                disabled={isLoading}
+                                type="submit"
+                            >
+                                Get profile
+                            </Button>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12} md={2} sm={3} className={classes.item}>
-                        <Button
-                            className={classes.button}
-                            variant="outlined"
-                            color="primary"
-                            onClick={this.handleOnClickButton}
-                            disabled={isLoading}
-                        >
-                            Get profile
-                        </Button>
-                    </Grid>
-                </Grid>
+
+                </form>
                 { profile && (
                     <Grid container justify="center">
                         <Grid item className={classes.item}>

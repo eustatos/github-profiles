@@ -23,8 +23,8 @@ const styles = theme => ({
     },
     form: {
         margin: 'auto',
-        maxWidth: '400px',
-        minHeight: '200px'
+        width: 320,
+        height: 200
     },
     buttonContainer: {
         display: 'flex',
@@ -80,71 +80,74 @@ class Login extends React.PureComponent {
 
         return (
             <Container className={classes.container}>
-                <Grid
-                    className={classes.form}
-                    container
-                    direction="column"
-                    justify="space-between"
-                    alignItems="stretch"
-                >
+                <form className={classes.form}>
                     <Grid
+                        className={classes.form}
                         container
                         direction="column"
+                        justify="space-between"
                         alignItems="stretch"
                     >
-                        <Grid item className={classes.margin}>
-                            <TextField
-                                error={!!error}
-                                fullWidth
-                                id="username"
-                                label="Username"
-                                type="email"
-                                autoFocus
-                                onChange={e => this.handleOnChangeField(e, 'username')}
-                                required
-                                value={username}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <AccountCircle />
-                                        </InputAdornment>
-                                    )
-                                }}
-                            />
-                        </Grid>
-                        <Grid item className={classes.margin}>
-                            <TextField
-                                error={!!error}
-                                fullWidth
-                                helperText={error}
-                                id="password"
-                                label="Password"
-                                type="password"
-                                onChange={e => this.handleOnChangeField(e, 'password')}
-                                required
-                                value={password}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <Lock />
-                                        </InputAdornment>
-                                    )
-                                }}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Grid item className={classes.buttonContainer}>
-                        <Button
-                            variant="outlined"
-                            color="primary"
-                            style={{ margin: 'auto', textTransform: 'none' }}
-                            onClick={this.handleOnClickButton}
-                            disabled={isSent}
+                        <Grid
+                            container
+                            direction="column"
+                            alignItems="stretch"
                         >
-                            Login
-                        </Button>
+                            <Grid item className={classes.margin}>
+                                <TextField
+                                    error={!!error}
+                                    fullWidth
+                                    id="username"
+                                    label="Username"
+                                    type="text"
+                                    autoFocus
+                                    onChange={e => this.handleOnChangeField(e, 'username')}
+                                    required
+                                    value={username}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <AccountCircle />
+                                            </InputAdornment>
+                                        )
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item className={classes.margin}>
+                                <TextField
+                                    error={!!error}
+                                    fullWidth
+                                    helperText={error}
+                                    id="password"
+                                    label="Password"
+                                    type="password"
+                                    onChange={e => this.handleOnChangeField(e, 'password')}
+                                    required
+                                    value={password}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <Lock />
+                                            </InputAdornment>
+                                        )
+                                    }}
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid item className={classes.buttonContainer}>
+                            <Button
+                                variant="outlined"
+                                color="primary"
+                                style={{ margin: 'auto', textTransform: 'none' }}
+                                onClick={this.handleOnClickButton}
+                                disabled={isSent}
+                                type="submit"
+                            >
+                                Login
+                            </Button>
+                        </Grid>
                     </Grid>
-                </Grid>
+                </form>
             </Container>
         );
     }
