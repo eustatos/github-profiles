@@ -29,10 +29,10 @@ export default function RepoTable({ error, repos }) {
     const classes = useStyles();
 
     if (error) {
-        return <Typography variant="h5" component="h2">{ error }</Typography>;
+        return <Typography variant="h5">{ error }</Typography>;
     }
     if (repos.length === 0) {
-        return <Typography variant="h5" component="h2">No repos</Typography>;
+        return <Typography variant="h5">No repos</Typography>;
     }
 
     return (

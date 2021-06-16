@@ -11,8 +11,7 @@ import BackButton from '../../components/back-button/back-button';
 const styles = () => ({
     container: {
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
+        margin: 'auto'
 
     },
     paper: {
@@ -20,6 +19,7 @@ const styles = () => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        margin: 'auto',
         height: '20vh',
         width: '50vh'
     },
@@ -36,7 +36,7 @@ class Page404 extends React.PureComponent {
                 className={classes.container}
             >
                 <Paper className={classes.paper}>
-                    <Typography component="h1">
+                    <Typography variant="h5">
                         Error 404. Page not found.
                     </Typography>
                     <div className={classes.button}>

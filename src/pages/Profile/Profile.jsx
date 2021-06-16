@@ -17,7 +17,7 @@ const styles = theme => ({
     },
     container: {
         minHeight: 120,
-        marginTop: 50
+        marginTop: 20
     },
     item: {
         padding: theme.spacing(2)

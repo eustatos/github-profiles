@@ -55,7 +55,7 @@ class Repo extends React.PureComponent {
                     justify="center"
                 >
                     <Grid item className={classes.title}>
-                        <Typography variant="h5" component="h2">
+                        <Typography variant="h5">
                             { match.params.id }
                         </Typography>
                     </Grid>

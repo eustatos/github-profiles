@@ -7,6 +7,7 @@ export const VERIFY_AUTH_SUCCESS = 'VERIFY_AUTH_SUCCESS';
 export const VERIFY_AUTH_FAILURE = 'VERIFY_AUTH_FAILURE';
 export const CLEAR_AUTH_ERROR = 'CLEAR_AUTH_ERROR';
 export const GET_SESSION = 'GET_SESSION';
+export const DELETE_SESSION = 'DELETE_SESSION';
 
 // Profile
 export const GET_PROFILE = 'GET_PROFILE';

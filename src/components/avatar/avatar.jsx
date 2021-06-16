@@ -26,10 +26,10 @@ export default function ImgMediaCard({ login, name, src }) {
                     title="Avatar"
                 />
                 <CardContent>
-                    <Typography variant="h5" component="h2">
+                    <Typography variant="h5">
                         { name }
                     </Typography>
-                    <Typography gutterBottom variant="h6" component="h3">
+                    <Typography gutterBottom variant="h6">
                         { login }
                     </Typography>
                 </CardContent>

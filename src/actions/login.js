@@ -36,3 +36,7 @@ export const clearAuthError = () => ({
 export const getSession = () => ({
     type: actions.GET_SESSION
 });
+
+export const deleteSession = () => ({
+    type: actions.DELETE_SESSION
+});
