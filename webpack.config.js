@@ -29,7 +29,8 @@ module.exports = {
         proxy: {
             context: ['/auth', '/api'],
             target: 'http://localhost:8090'
-        }
+        },
+        publicPath: '/'
     },
     devtool: 'source-map',
     module: {

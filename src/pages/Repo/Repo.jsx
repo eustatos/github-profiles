@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
@@ -26,12 +27,24 @@ const styles = () => ({
 class Repo extends React.PureComponent {
     componentDidMount = () => {
         const { getCommits, match, username } = this.props;
+        if (!username) {
+            return;
+        }
         const { id } = match.params;
         getCommits(id, username);
     }
 
     render() {
-        const { classes, commits, match } = this.props;
+        const {
+            classes,
+            commits,
+            match,
+            username
+        } = this.props;
+
+        if (!username) {
+            return <Redirect to="/" />;
+        }
 
         return (
             <Container spacing={2}>
@@ -50,7 +63,7 @@ class Repo extends React.PureComponent {
                         <CommitTable commits={commits} />
                     </Grid>
                     <Grid item className={classes.button}>
-                        <BackButton path="profile" text="Back to Profile" />
+                        <BackButton path="" text="Back to Profile" />
                     </Grid>
                 </Grid>
             </Container>
