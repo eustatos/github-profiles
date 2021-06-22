@@ -29,7 +29,6 @@ jobs:
           node-version: 12
       - run: npm ci
       - run: npm run build
-      - run: npm run export
 
       - name: GH Pages deploy
         # You may pin to the exact commit or the version.
@@ -41,7 +40,7 @@ jobs:
           # A verified email.
           email: astashkinav@gmail.com
           # Where static files are.
-          build_dir: out
+          build_dir: dist
           # Which branch to push files.
           branch: gh-pages
           # The custom domain name.
