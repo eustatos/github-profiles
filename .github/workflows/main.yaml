@@ -40,7 +40,7 @@ jobs:
           # A verified email.
           email: astashkinav@gmail.com
           # Where static files are.
-          build_dir: dist
+          build_dir: public
           # Which branch to push files.
           branch: gh-pages
           # The custom domain name.
